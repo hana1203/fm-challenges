@@ -15,9 +15,12 @@
   --color-Purple-500: hsl(256, 67%, 59%);
   --color-Yellow-100: hsl(31, 66%, 93%);
   --color-Yellow-500: hsl(39, 100%, 71%);
+  --breakpoint-mobile: 23.438rem; /* 375px */
+  --breakpoint-desktop: 90rem;
 }
 body {
   font-family: var(--font-family);
   font-size: var(--text-base);
   background-color: var(--color-base);
+  width: 100%;
 }
