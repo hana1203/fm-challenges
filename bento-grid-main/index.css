@@ -2,14 +2,24 @@
 
 @font-face {
   font-family: "DM Sans";
-  src: url("/assets/fonts/DMSans-Italic-VariableFont_opsz,wght.ttf")
+  src: url("./assets/fonts/DMSans-VariableFont_opsz,wght.ttf")
       format("truetype"),
-    url("/assets/fonts/DMSans-VariableFont_opsz,wght.ttf") format("truetype");
+    url("./assets/fonts/static/DMSans-Regular.ttf") format("truetype"),
+    url("./assets/fonts/static/DMSans-Medium.ttf") format("truetype");
   font-weight: 400 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("./assets/fonts/DMSans-Italic-VariableFont_opsz,wght.ttf")
+      format("truetype"),
+    url("./assets/fonts/static/DMSans-MediumItalic.ttf") format("truetype");
+  font-weight: 400 500;
+  font-style: italic;
 }
 @theme {
   --font-family: "DM Sans", sans-serif;
-  --text-base: 18px;
+  --text-base: 1.125rem; /* 18px */
   --color-base: hsl(0, 0%, 96%);
   --color-Purple-100: hsl(254, 88%, 90%);
   --color-Purple-500: hsl(256, 67%, 59%);
@@ -18,9 +28,22 @@
   --breakpoint-mobile: 23.438rem; /* 375px */
   --breakpoint-desktop: 90rem;
 }
+@layer components {
+  .card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+}
 body {
   font-family: var(--font-family);
   font-size: var(--text-base);
   background-color: var(--color-base);
   width: 100%;
+  /* for tracing */
+  background-image: url("./transparent-mobile-design.png");
+  background-size: cover;
+}
+
+main {
+  opacity: 60%;
 }
