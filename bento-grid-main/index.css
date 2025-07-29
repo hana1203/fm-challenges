@@ -41,9 +41,9 @@ body {
   width: 100%;
   /* for tracing */
   background-image: url("./transparent-mobile-design.png");
-  background-size: cover;
+  background-size: 100%;
 }
 
 main {
-  opacity: 60%;
+  opacity: 50%;
 }
