@@ -40,10 +40,28 @@ body {
   background-color: var(--color-base);
   width: 100%;
   /* for tracing */
-  background-image: url("./transparent-mobile-design.png");
+  background-image: url("./trans-desktop-design 1.png");
   background-size: 100%;
+  background-repeat: no-repeat;
 }
 
+/* Mobile first approach */
 main {
-  opacity: 50%;
+  opacity: 60%;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: auto;
+  /* max-width: var(--breakpoint-mobile); */
+}
+
+/* Desktop styles */
+@media (min-width: 1440px) {
+  main {
+    display: grid;
+    grid-template-rows: repeat(1fr, 3);
+    grid-template-columns: repeat(1fr, 4);
+    padding: 5rem 10rem;
+  }
 }
