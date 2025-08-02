@@ -10,14 +10,22 @@
     --color-white: #fff;
     --spacing: 0.25rem;
     --text-base: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
     --text-2xl: 1.5rem;
     --text-2xl--line-height: calc(2 / 1.5);
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-4xl: 2.25rem;
+    --text-4xl--line-height: calc(2.5 / 2.25);
     --text-5xl: 3rem;
     --text-5xl--line-height: 1;
     --font-weight-medium: 500;
+    --font-weight-semibold: 600;
     --tracking-tight: -0.025em;
+    --tracking-wide: 0.025em;
+    --tracking-wider: 0.05em;
+    --tracking-widest: 0.1em;
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
     --font-family: "DM Sans", sans-serif;
@@ -178,36 +186,6 @@
   .static {
     position: static;
   }
-  .col-\[1\/2\] {
-    grid-column: 1/2;
-  }
-  .col-\[2\/3\] {
-    grid-column: 2/3;
-  }
-  .col-\[2\/4\] {
-    grid-column: 2/4;
-  }
-  .col-\[3\/4\] {
-    grid-column: 3/4;
-  }
-  .col-\[3\/5\] {
-    grid-column: 3/5;
-  }
-  .col-\[4\/5\] {
-    grid-column: 4/5;
-  }
-  .row-\[1\/2\] {
-    grid-row: 1/2;
-  }
-  .row-\[1\/3\] {
-    grid-row: 1/3;
-  }
-  .row-\[2\/3\] {
-    grid-row: 2/3;
-  }
-  .row-\[3\/4\] {
-    grid-row: 3/4;
-  }
   .contents {
     display: contents;
   }
@@ -225,6 +203,15 @@
   }
   .aspect-\[50\/31\] {
     aspect-ratio: 50/31;
+  }
+  .h-full {
+    height: 100%;
+  }
+  .w-\[20\%\] {
+    width: 20%;
+  }
+  .w-\[50\%\] {
+    width: 50%;
   }
   .w-\[60\%\] {
     width: 60%;
@@ -244,11 +231,14 @@
   .flex-col {
     flex-direction: column;
   }
-  .flex-row {
-    flex-direction: row;
-  }
   .items-center {
     align-items: center;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .justify-start {
+    justify-content: flex-start;
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
@@ -280,6 +270,9 @@
   }
   .bg-white {
     background-color: var(--color-white);
+  }
+  .object-contain {
+    object-fit: contain;
   }
   .object-cover {
     object-fit: cover;
@@ -368,6 +361,10 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
   }
+  .font-semibold {
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+  }
   .tracking-tight {
     --tw-tracking: var(--tracking-tight);
     letter-spacing: var(--tracking-tight);
@@ -387,6 +384,104 @@
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
+  }
+  .desktop\:max-h-\[15\.5rem\] {
+    @media (width >= 90rem) {
+      max-height: 15.5rem;
+    }
+  }
+  .desktop\:flex-row {
+    @media (width >= 90rem) {
+      flex-direction: row;
+    }
+  }
+  .desktop\:justify-end {
+    @media (width >= 90rem) {
+      justify-content: flex-end;
+    }
+  }
+  .desktop\:justify-start {
+    @media (width >= 90rem) {
+      justify-content: flex-start;
+    }
+  }
+  .desktop\:gap-0 {
+    @media (width >= 90rem) {
+      gap: calc(var(--spacing) * 0);
+    }
+  }
+  .desktop\:gap-1 {
+    @media (width >= 90rem) {
+      gap: calc(var(--spacing) * 1);
+    }
+  }
+  .desktop\:gap-2 {
+    @media (width >= 90rem) {
+      gap: calc(var(--spacing) * 2);
+    }
+  }
+  .desktop\:gap-3 {
+    @media (width >= 90rem) {
+      gap: calc(var(--spacing) * 3);
+    }
+  }
+  .desktop\:p-0 {
+    @media (width >= 90rem) {
+      padding: calc(var(--spacing) * 0);
+    }
+  }
+  .desktop\:text-start {
+    @media (width >= 90rem) {
+      text-align: start;
+    }
+  }
+  .desktop\:text-4xl {
+    @media (width >= 90rem) {
+      font-size: var(--text-4xl);
+      line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+  }
+  .desktop\:text-5xl {
+    @media (width >= 90rem) {
+      font-size: var(--text-5xl);
+      line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+  }
+  .desktop\:text-xl {
+    @media (width >= 90rem) {
+      font-size: var(--text-xl);
+      line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
+  }
+  .desktop\:leading-9 {
+    @media (width >= 90rem) {
+      --tw-leading: calc(var(--spacing) * 9);
+      line-height: calc(var(--spacing) * 9);
+    }
+  }
+  .desktop\:font-semibold {
+    @media (width >= 90rem) {
+      --tw-font-weight: var(--font-weight-semibold);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+  .desktop\:tracking-wide {
+    @media (width >= 90rem) {
+      --tw-tracking: var(--tracking-wide);
+      letter-spacing: var(--tracking-wide);
+    }
+  }
+  .desktop\:tracking-wider {
+    @media (width >= 90rem) {
+      --tw-tracking: var(--tracking-wider);
+      letter-spacing: var(--tracking-wider);
+    }
+  }
+  .desktop\:tracking-widest {
+    @media (width >= 90rem) {
+      --tw-tracking: var(--tracking-widest);
+      letter-spacing: var(--tracking-widest);
+    }
   }
 }
 @font-face {
@@ -427,8 +522,9 @@ main {
 @media (min-width: 1440px) {
   main {
     display: grid;
-    grid-template-rows: repeat(1fr, 3);
-    grid-template-columns: repeat(1fr, 4);
+    grid-template-areas: "card7 card1 card1 card4" "card7 card2 card3 card4" "card8 card2 card3 card4" "card8 card6 card5 card5";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 0.2fr 0.5fr 0.8fr;
     padding: 5rem 10rem;
   }
 }

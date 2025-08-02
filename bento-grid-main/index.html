@@ -15,10 +15,11 @@
 
     <title>Frontend Mentor | Bento grid</title>
   </head>
-  <body class="flex">
+  <body class="flex flex-col">
     <main>
       <div
-        class="card flex flex-col gap-5 bg-Purple-500 text-white p-10 row-[1/2] col-[2/4]"
+        class="card flex flex-col gap-5 bg-Purple-500 text-white p-10"
+        style="grid-area: card1"
       >
         <div class="text-5xl font-medium text-center leading-11">
           <p>Social Media</p>
@@ -34,14 +35,18 @@
           <p class="pt-1">Over 4,000 5-star reviews</p>
         </div>
       </div>
-      <div class="card flex flex-col gap-4 border-1 pt-3.5 row-[2/3] col-[2/3]">
+      <div
+        class="card flex flex-col gap-4 border-1 pt-3.5"
+        style="grid-area: card2"
+      >
         <img src="./assets/images/illustration-multiple-platforms.webp" />
         <p class="text-2xl font-medium leading-6">
           Manage multiple accounts and platforms.
         </p>
       </div>
       <div
-        class="card flex flex-col gap-4 pb-0 bg-Yellow-500 aspect-[50/31] overflow-hidden row-[2/3] col-[3/4]"
+        class="card flex flex-col gap-4 pb-0 bg-Yellow-500 aspect-[50/31] overflow-hidden"
+        style="grid-area: card3"
       >
         <p class="text-2xl font-medium leading-6">
           Maintain a consistent posting schedule.
@@ -52,7 +57,8 @@
         />
       </div>
       <div
-        class="card bg-Purple-100 flex flex-col text-center py-8 gap-5 row-[1/3] col-[4/5]"
+        class="card bg-Purple-100 flex flex-col text-center py-8 gap-5"
+        style="grid-area: card4"
       >
         <p class="text-2xl font-medium leading-8">Schedule to social media.</p>
         <img src="assets/images/illustration-schedule-posts.webp" />
@@ -62,17 +68,20 @@
         </p>
       </div>
       <div
-        class="card bg-Purple-500 p-6 flex flex-col gap-8 items-center row-[3/4] col-[3/5]"
+        class="card bg-Purple-500 p-6 flex flex-col gap-8 items-center desktop:max-h-[15.5rem] desktop:flex-row desktop:gap-3"
+        style="grid-area: card5"
       >
         <img
           src="assets/images/illustration-grow-followers.webp"
-          class="w-[76%]"
+          class="w-[76%] h-full object-contain"
         />
-        <p class="text-white text-3xl leading-8 font-medium text-center px-6">
+        <p
+          class="text-white text-3xl leading-8 font-medium text-center px-6 desktop:p-0 desktop:text-start desktop:text-4xl desktop:font-semibold desktop:tracking-wide desktop:leading-9"
+        >
           Grow followers with non-stop content.
         </p>
       </div>
-      <div class="card bg-white border-1 p-5 row-[3/4] col-[2/3]">
+      <div class="card bg-white border-1 p-5" style="grid-area: card6">
         <p class="text-5xl">>56%</p>
         <p>faster audience growth</p>
         <img
@@ -80,7 +89,7 @@
           class="w-[60%] pt-5"
         />
       </div>
-      <div class="card bg-Yellow-100 p-8 border-1 row-[1/3] col-[1/2]">
+      <div class="card bg-Yellow-100 p-8 border-1" style="grid-area: card7">
         <div class="text-3xl font-medium leading-7 tracking-tight">
           <p>Create and schedule</p>
           <span>content</span>
@@ -91,7 +100,7 @@
           class="w-[70%] pt-8"
         />
       </div>
-      <div class="card bg-Yellow-500 p-5 row-[3/4] col-[1/2]">
+      <div class="card bg-Yellow-500 p-5" style="grid-area: card8">
         <p class="text-3xl font-medium leading-7">
           Write your content using AI.
         </p>
@@ -100,15 +109,14 @@
           class="w-[72%] pt-6"
         />
       </div>
-      <div class="text-center">
-        <p>
-          Challenge by
-          <a href="https://www.frontendmentor.io?ref=challenge"
-            >Frontend Mentor</a
-          >.
-        </p>
-        <p>Coded by <a href="https://github.com/hana1203">hana1203</a>.</p>
-      </div>
     </main>
+    <div class="text-center">
+      <p>
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a
+        >.
+      </p>
+      <p>Coded by <a href="https://github.com/hana1203">hana1203</a>.</p>
+    </div>
   </body>
 </html>

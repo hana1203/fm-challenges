@@ -60,8 +60,13 @@ main {
 @media (min-width: 1440px) {
   main {
     display: grid;
-    grid-template-rows: repeat(1fr, 3);
-    grid-template-columns: repeat(1fr, 4);
+    grid-template-areas:
+      "card7 card1 card1 card4"
+      "card7 card2 card3 card4"
+      "card8 card2 card3 card4"
+      "card8 card6 card5 card5";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 0.2fr 0.5fr 0.8fr;
     padding: 5rem 10rem;
   }
 }
