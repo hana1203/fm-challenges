@@ -18,51 +18,65 @@
   <body class="flex flex-col">
     <main>
       <div
-        class="card flex flex-col gap-5 bg-Purple-500 text-white p-10"
+        class="card flex flex-col gap-5 bg-Purple-500 text-white p-10 desktop:gap-6 desktop:px-12 desktop:py-15"
         style="grid-area: card1"
       >
-        <div class="text-5xl font-medium text-center leading-11">
-          <p>Social Media</p>
+        <div
+          class="text-5xl font-medium text-center leading-11 desktop:text-6xl desktop:leading-15"
+        >
+          <span class="mobile:block desktop:inline">Social Media</span>
           <span class="text-Yellow-500">10x</span>
           <span class="italic">Faster</span>
-          <p>with AI</p>
+          <span class="mobile:block desktop:inline">with AI</span>
         </div>
         <div class="text-center">
           <img
             src="./assets/images/illustration-five-stars.webp"
-            class="inline w-[70%]"
+            class="inline w-[70%] desktop:w-[40%]"
           />
           <p class="pt-1">Over 4,000 5-star reviews</p>
         </div>
       </div>
       <div
-        class="card flex flex-col gap-4 border-1 pt-3.5"
+        class="card flex flex-col gap-4 pt-3.5 desktop:px-6 desktop:pt-9 desktop:gap-8 desktop:overflow-hidden"
         style="grid-area: card2"
       >
-        <img src="./assets/images/illustration-multiple-platforms.webp" />
-        <p class="text-2xl font-medium leading-6">
+        <img
+          src="./assets/images/illustration-multiple-platforms.webp"
+          class="desktop:scale-150 desktop:translate-x-12"
+        />
+        <p
+          class="text-2xl font-medium leading-6 desktop:text-3xl desktop:leading-7"
+        >
           Manage multiple accounts and platforms.
         </p>
       </div>
       <div
-        class="card flex flex-col gap-4 pb-0 bg-Yellow-500 aspect-[50/31] overflow-hidden"
+        class="card flex flex-col gap-4 pb-0 bg-Yellow-500 aspect-[50/31] overflow-hidden desktop:pt-7 desktop:px-6 desktop:aspect-auto"
         style="grid-area: card3"
       >
-        <p class="text-2xl font-medium leading-6">
+        <p
+          class="text-2xl font-medium leading-6 desktop:text-3xl desktop:leading-7"
+        >
           Maintain a consistent posting schedule.
         </p>
         <img
           src="assets/images/illustration-consistent-schedule.webp"
-          class="inline w-[67%] object-cover object-top"
+          class="inline w-[67%] object-cover object-top desktop:w-full"
         />
       </div>
       <div
-        class="card bg-Purple-100 flex flex-col text-center py-8 gap-5"
+        class="card bg-Purple-100 flex flex-col text-center py-8 gap-5 desktop:pt-12 desktop:pb-12 desktop:px-8 desktop:text-start desktop:overflow-hidden desktop:justify-between"
         style="grid-area: card4"
       >
-        <p class="text-2xl font-medium leading-8">Schedule to social media.</p>
-        <img src="assets/images/illustration-schedule-posts.webp" />
-        <p class="px-4 leading-5">
+        <p class="text-2xl leading-8 desktop:text-3xl">
+          Schedule to social media.
+        </p>
+        <img
+          src="assets/images/illustration-schedule-posts.webp"
+          class="desktop:scale-185 desktop:translate-x-21"
+        />
+        <p class="px-4 leading-5 desktop:p-0">
           Optimize post timings to publish content at the perfect time for your
           audience.
         </p>
@@ -81,32 +95,42 @@
           Grow followers with non-stop content.
         </p>
       </div>
-      <div class="card bg-white border-1 p-5" style="grid-area: card6">
-        <p class="text-5xl">>56%</p>
+      <div
+        class="card bg-white p-5 desktop:px-6 desktop:flex desktop:flex-col desktop:gap-3"
+        style="grid-area: card6"
+      >
+        <p class="text-5xl desktop:text-6xl desktop:font-semibold">>56%</p>
         <p>faster audience growth</p>
         <img
           src="assets/images/illustration-audience-growth.webp"
-          class="w-[60%] pt-5"
+          class="w-[60%] pt-5 desktop:w-[85%] desktop:pt-6"
         />
       </div>
-      <div class="card bg-Yellow-100 p-8 border-1" style="grid-area: card7">
-        <div class="text-3xl font-medium leading-7 tracking-tight">
+      <div
+        class="card bg-Yellow-100 p-8 desktop:py-20"
+        style="grid-area: card7"
+      >
+        <div
+          class="text-3xl font-medium leading-7 tracking-tight desktop:text-4xl desktop:leading-9"
+        >
           <p>Create and schedule</p>
           <span>content</span>
           <span class="italic text-Purple-500">quicker.</span>
         </div>
         <img
           src="assets/images/illustration-create-post.webp"
-          class="w-[70%] pt-8"
+          class="w-[70%] pt-8 desktop:w-full desktop:pt-6"
         />
       </div>
-      <div class="card bg-Yellow-500 p-5" style="grid-area: card8">
-        <p class="text-3xl font-medium leading-7">
+      <div class="card bg-Yellow-500 p-5 desktop:p-6" style="grid-area: card8">
+        <p
+          class="text-3xl font-medium leading-7 desktop:text-4xl desktop:leading-9"
+        >
           Write your content using AI.
         </p>
         <img
           src="assets/images/illustration-ai-content.webp"
-          class="w-[72%] pt-6"
+          class="w-[72%] pt-6 desktop:w-full desktop:scale-105 desktop:pt-13 desktop:translate-x-1"
         />
       </div>
     </main>

@@ -39,21 +39,15 @@ body {
   font-size: var(--text-base);
   background-color: var(--color-base);
   width: 100%;
-  /* for tracing */
-  background-image: url("./trans-desktop-design 1.png");
-  background-size: 100%;
-  background-repeat: no-repeat;
 }
 
 /* Mobile first approach */
 main {
-  opacity: 60%;
   padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   margin: auto;
-  /* max-width: var(--breakpoint-mobile); */
 }
 
 /* Desktop styles */
@@ -66,7 +60,7 @@ main {
       "card8 card2 card3 card4"
       "card8 card6 card5 card5";
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 0.2fr 0.5fr 0.8fr;
+    grid-template-rows: 1fr 0.2fr 0.47fr 0.8fr;
     padding: 5rem 10rem;
   }
 }
