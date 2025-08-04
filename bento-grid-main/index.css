@@ -44,8 +44,16 @@ body {
 /* Mobile first approach */
 main {
   padding: 2rem 1rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-areas:
+    "card1"
+    "card2"
+    "card3"
+    "card4"
+    "card5"
+    "card6"
+    "card7"
+    "card8";
   gap: 2rem;
   margin: auto;
 }
