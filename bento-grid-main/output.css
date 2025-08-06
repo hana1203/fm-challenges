@@ -183,6 +183,30 @@
   .static {
     position: static;
   }
+  .container {
+    width: 100%;
+    @media (width >= 23.438rem) {
+      max-width: 23.438rem;
+    }
+    @media (width >= 40rem) {
+      max-width: 40rem;
+    }
+    @media (width >= 48rem) {
+      max-width: 48rem;
+    }
+    @media (width >= 64rem) {
+      max-width: 64rem;
+    }
+    @media (width >= 80rem) {
+      max-width: 80rem;
+    }
+    @media (width >= 90rem) {
+      max-width: 90rem;
+    }
+    @media (width >= 96rem) {
+      max-width: 96rem;
+    }
+  }
   .contents {
     display: contents;
   }
@@ -218,6 +242,9 @@
   }
   .w-\[76\%\] {
     width: 76%;
+  }
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .flex-col {
     flex-direction: column;
@@ -388,6 +415,31 @@
   .desktop\:max-h-\[15\.5rem\] {
     @media (width >= 90rem) {
       max-height: 15.5rem;
+    }
+  }
+  .desktop\:max-h-\[15\.6rem\] {
+    @media (width >= 90rem) {
+      max-height: 15.6rem;
+    }
+  }
+  .desktop\:max-h-\[15\.7rem\] {
+    @media (width >= 90rem) {
+      max-height: 15.7rem;
+    }
+  }
+  .desktop\:max-h-\[15\.8rem\] {
+    @media (width >= 90rem) {
+      max-height: 15.8rem;
+    }
+  }
+  .desktop\:max-h-\[15\.9rem\] {
+    @media (width >= 90rem) {
+      max-height: 15.9rem;
+    }
+  }
+  .desktop\:max-h-\[16rem\] {
+    @media (width >= 90rem) {
+      max-height: 16rem;
     }
   }
   .desktop\:w-\[40\%\] {
@@ -641,6 +693,26 @@ main {
     padding: 5rem 10rem;
   }
 }
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-leading {
   syntax: "*";
   inherits: false;
@@ -691,6 +763,11 @@ main {
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-leading: initial;
       --tw-font-weight: initial;
       --tw-tracking: initial;
