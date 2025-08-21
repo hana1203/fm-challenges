@@ -22,6 +22,7 @@ export type TargetType = "POST" | "GROUP" | "MESSAGE" | "PICTURE";
 type Target = TargetOfPost | TargetOfGroup | TargetOfMessage | TargetOfPicture;
 
 export interface Data {
+  id: string;
   avatarSrc: string;
   name: string;
   action: string;
@@ -32,6 +33,7 @@ export interface Data {
 
 export const data: Data[] = [
   {
+    id: "0",
     avatarSrc: "../assets/images/avatar-mark-webber.webp",
     name: "Mark Webber",
     action: "reacted to your recent post",
@@ -43,6 +45,7 @@ export const data: Data[] = [
     seen: false,
   },
   {
+    id: "1",
     avatarSrc: "../assets/images/avatar-angela-gray.webp",
     name: "Angela Gray",
     action: "followed you",
@@ -50,6 +53,7 @@ export const data: Data[] = [
     seen: false,
   },
   {
+    id: "2",
     avatarSrc: "",
     name: "Jacob Thompson",
     action: "has joined your group",
@@ -61,6 +65,7 @@ export const data: Data[] = [
     seen: false,
   },
   {
+    id: "3",
     avatarSrc: "",
     name: "Rizky Hasanuddin",
     action: "sent you a private message",
@@ -73,6 +78,7 @@ export const data: Data[] = [
     seen: true,
   },
   {
+    id: "4",
     avatarSrc: "",
     name: "Kimberly Smith",
     action: "commented on your picture",
@@ -84,6 +90,7 @@ export const data: Data[] = [
     seen: true,
   },
   {
+    id: "5",
     avatarSrc: "",
     name: "Nathan Peterson",
     action: "reacted to your recent post",
@@ -95,6 +102,7 @@ export const data: Data[] = [
     seen: true,
   },
   {
+    id: "6",
     avatarSrc: "",
     name: "Anna Kim",
     action: "left the group",
