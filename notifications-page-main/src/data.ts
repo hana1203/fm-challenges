@@ -34,7 +34,7 @@ export interface Data {
 export const data: Data[] = [
   {
     id: "0",
-    avatarSrc: "../assets/images/avatar-mark-webber.webp",
+    avatarSrc: "./assets/images/avatar-mark-webber.webp",
     name: "Mark Webber",
     action: "reacted to your recent post",
     target: {
@@ -46,7 +46,7 @@ export const data: Data[] = [
   },
   {
     id: "1",
-    avatarSrc: "../assets/images/avatar-angela-gray.webp",
+    avatarSrc: "./assets/images/avatar-angela-gray.webp",
     name: "Angela Gray",
     action: "followed you",
     timestamp: "5m ago",
@@ -54,7 +54,7 @@ export const data: Data[] = [
   },
   {
     id: "2",
-    avatarSrc: "",
+    avatarSrc: "./assets/images/avatar-jacob-thompson.webp",
     name: "Jacob Thompson",
     action: "has joined your group",
     target: {
@@ -66,7 +66,7 @@ export const data: Data[] = [
   },
   {
     id: "3",
-    avatarSrc: "",
+    avatarSrc: "./assets/images/avatar-rizky-hasanuddin.webp",
     name: "Rizky Hasanuddin",
     action: "sent you a private message",
     target: {
@@ -74,24 +74,24 @@ export const data: Data[] = [
       details:
         "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and I'm already having lots of fun and improving my game.",
     },
-    timestamp: "5days ago",
+    timestamp: "5 days ago",
     seen: true,
   },
   {
     id: "4",
-    avatarSrc: "",
+    avatarSrc: "./assets/images/avatar-kimberly-smith.webp",
     name: "Kimberly Smith",
     action: "commented on your picture",
     target: {
       type: "PICTURE",
-      pictureSrc: "",
+      pictureSrc: "./assets/images/image-chess.webp",
     },
     timestamp: "1 week ago",
     seen: true,
   },
   {
     id: "5",
-    avatarSrc: "",
+    avatarSrc: "./assets/images/avatar-nathan-peterson.webp",
     name: "Nathan Peterson",
     action: "reacted to your recent post",
     target: {
@@ -103,7 +103,7 @@ export const data: Data[] = [
   },
   {
     id: "6",
-    avatarSrc: "",
+    avatarSrc: "./assets/images/avatar-anna-kim.webp",
     name: "Anna Kim",
     action: "left the group",
     target: {

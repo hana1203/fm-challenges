@@ -13,38 +13,43 @@ function App() {
 
   const cardTemplate = (props: CardItem) => {
     const { id, avatarSrc, name, action, timestamp, target, read } = props;
-    return `<div key=${id} class='card flex items-center border-1 ${
-      !read && "bg-amber-600"
-    }'>
-        <div>
+    return `<div key=${id} class='card flex ${
+      !read ? "cursor-pointer bg-navy-50" : ""
+    }
+    rounded-lg py-2 px-4 gap-3'>
+        <div class='max-w-10 max-h-10 shrink-0'>
            <img src=${avatarSrc} />
         </div>
         <div class='flex flex-col'>
           <div>
-              <span>${name}</span>
+              <span class='text-navy-950 font-bold cursor-pointer hover:text-blue-950'>${name}</span>
               <span>${action}</span>
               ${
                 target?.type === "POST"
-                  ? `<span class="text-Navy-950">${target.title}</span>`
+                  ? `<span class="font-semibold cursor-pointer hover:text-blue-950">${target.title}</span>`
                   : ``
               }
                  ${
                    target?.type === "GROUP"
-                     ? `<span class='text-Blue-950'>${target.name}</span>`
+                     ? `<span class='font-semibold cursor-pointer hover:text-blue-950'>${target.name}</span>`
                      : ``
                  }
-              ${read === false ? `<span>안읽음</span>` : ``}
+              ${
+                read === false
+                  ? `<span class="inline-block w-2 h-2 ml-1 rounded-full bg-red-500"></span>`
+                  : ``
+              }
           </div>
-          <p>${timestamp}</p>
+          <p class='text-gray-500'>${timestamp}</p>
           ${
             target?.type === "MESSAGE"
-              ? `<div class='border-1'>${target.details}</div>`
+              ? `<div class='my-2 p-4 border-1 border-navy-100 rounded-sm cursor-pointer hover:bg-blue-100'>${target.details}</div>`
               : ``
           }
         </div>
         ${
           target?.type === "PICTURE"
-            ? `<div class='ml-auto'><img src= ${target.pictureSrc}/></div>`
+            ? `<div class='ml-auto'><img src= ${target.pictureSrc} class='max-w-10 max-h-10 cursor-pointer hover:border-2 border-blue-100 rounded-lg' /></div>`
             : ``
         }
         
