@@ -14,24 +14,28 @@ function App() {
   const cardTemplate = (props: CardItem) => {
     const { id, avatarSrc, name, action, timestamp, target, read } = props;
     return `<div key=${id} class='card flex ${
-      !read ? "cursor-pointer bg-navy-50" : ""
+      !read
+        ? "cursor-pointer bg-navy-50 focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1 focus:rounded"
+        : ""
     }
-    rounded-lg py-2 px-4 gap-3'>
+    rounded-lg py-2 px-4 gap-3'
+    ${!read ? 'tabindex="0"' : ""}
+    >
         <div class='max-w-10 max-h-10 shrink-0'>
            <img src=${avatarSrc} />
         </div>
         <div class='flex flex-col'>
           <div>
-              <span class='text-navy-950 font-bold cursor-pointer hover:text-blue-950'>${name}</span>
+              <span class='text-navy-950 font-bold cursor-pointer hover:text-blue-950 focus:text-blue-950 focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1 focus:rounded' tabindex="0">${name}</span>
               <span>${action}</span>
               ${
                 target?.type === "POST"
-                  ? `<span class="font-semibold cursor-pointer hover:text-blue-950">${target.title}</span>`
+                  ? `<span class="font-semibold cursor-pointer hover:text-blue-950 focus:text-blue-950 focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1 focus:rounded" tabindex="0">${target.title}</span>`
                   : ``
               }
                  ${
                    target?.type === "GROUP"
-                     ? `<span class='font-semibold cursor-pointer hover:text-blue-950'>${target.name}</span>`
+                     ? `<span class='font-semibold cursor-pointer hover:text-blue-950 focus:text-blue-950 focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1 focus:rounded' tabindex="0">${target.name}</span>`
                      : ``
                  }
               ${
@@ -43,13 +47,13 @@ function App() {
           <p class='text-gray-500'>${timestamp}</p>
           ${
             target?.type === "MESSAGE"
-              ? `<div class='my-2 p-4 border-1 border-navy-100 rounded-sm cursor-pointer hover:bg-blue-100'>${target.details}</div>`
+              ? `<div class='my-2 p-4 border-1 border-navy-100 rounded-sm cursor-pointer hover:bg-blue-100 focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1 focus:rounded' tabindex="0">${target.details}</div>`
               : ``
           }
         </div>
         ${
           target?.type === "PICTURE"
-            ? `<div class='ml-auto'><img src= ${target.pictureSrc} class='max-w-10 max-h-10 cursor-pointer hover:border-2 border-blue-100 rounded-lg' /></div>`
+            ? `<div class='ml-auto'><img src= ${target.pictureSrc} class='max-w-10 max-h-10 cursor-pointer hover:border-2 border-blue-100 focus:border-2 focus:border-blue-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1' tabindex="0" /></div>`
             : ``
         }
         
@@ -95,14 +99,22 @@ function App() {
   });
 
   const mainSectionEl = document.querySelector(".main_section")! as HTMLElement;
-  mainSectionEl.addEventListener("click", (e: MouseEvent) => {
-    const target = e.target;
+
+  const markCardAsRead = (event: Event) => {
+    const target = event.target;
     if (!(target instanceof Element)) return;
     const closestCardParentEl = target.closest(".card") as HTMLElement | null;
     if (closestCardParentEl) {
       const key = closestCardParentEl.getAttribute("key") as string;
       readState[key] = true;
       renderPage();
+    }
+  };
+
+  mainSectionEl.addEventListener("click", markCardAsRead);
+  mainSectionEl.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      markCardAsRead(e);
     }
   });
 }
