@@ -79,10 +79,11 @@ jobs:
               echo "TypeScript project detected in $proj. Compiling with tsc..."
               pushd "$dir" >/dev/null
               tsc --project tsconfig.json
-              # Copy index.html into dist if exists
+              # Copy index.html into dist if exists and fix script path
               if [ -f "index.html" ]; then
                 mkdir -p dist
-                cp index.html dist/index.html
+                # Fix script path from ./dist/app.js to ./app.js
+                sed 's|src="./dist/app.js"|src="./app.js"|g' index.html > dist/index.html
               fi
               # Copy assets if exists
               [ -d assets ] && mkdir -p dist && cp -R assets dist/assets || true
