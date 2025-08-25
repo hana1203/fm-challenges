@@ -1,15 +1,17 @@
-import { Data, data } from "./data.js";
+import { data } from "./data.js";
+import { Data } from "./types/data.js";
+import { NotificationStore } from "./stores/notificationStore.js";
 
 type CardItem = Omit<Data, "seen"> & {
   read: boolean;
 };
-interface ReadState {
-  [key: string]: boolean;
-}
 
 function App() {
-  const readState = {} as ReadState;
-  data.forEach((item) => (readState[item.id] = item.seen));
+  const notificationStore = new NotificationStore(data);
+  notificationStore.subscribe(() => {
+    renderNotificationsCount();
+    renderAllItems();
+  });
 
   const cardTemplate = (props: CardItem) => {
     const { id, avatarSrc, name, action, timestamp, target, read } = props;
@@ -20,6 +22,7 @@ function App() {
     }
     rounded-lg py-2 px-4 gap-3'
     ${!read ? 'tabindex="0"' : ""}
+    role='button'
     >
         <div class='max-w-10 max-h-10 shrink-0'>
            <img src=${avatarSrc} />
@@ -61,10 +64,7 @@ function App() {
   };
 
   const renderNotificationsCount = () => {
-    const notiCount = Object.values(readState).filter(
-      (val) => val == false
-    ).length;
-
+    const notiCount = notificationStore.getUnreadCount();
     const notificationsCountEl = document.querySelector(
       ".notifions_count"
     )! as HTMLElement;
@@ -72,6 +72,7 @@ function App() {
   };
 
   const renderAllItems = () => {
+    const readState = notificationStore.getReadState();
     const allItems = data
       .map((item) => cardTemplate({ ...item, read: readState[item.id] }))
       .join(" ");
@@ -92,10 +93,7 @@ function App() {
     ".notifications_read_all"
   )! as HTMLElement;
   markAsAllReadEl.addEventListener("click", () => {
-    for (const [key, _] of Object.entries(readState)) {
-      readState[key] = true;
-    }
-    renderPage();
+    notificationStore.markAllAsRead();
   });
 
   const mainSectionEl = document.querySelector(".main_section")! as HTMLElement;
@@ -106,8 +104,7 @@ function App() {
     const closestCardParentEl = target.closest(".card") as HTMLElement | null;
     if (closestCardParentEl) {
       const key = closestCardParentEl.getAttribute("key") as string;
-      readState[key] = true;
-      renderPage();
+      notificationStore.markAsRead(key);
     }
   };
 
