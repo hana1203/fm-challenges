@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+    <title>Frontend Mentor | Notifications page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @font-face {
+        font-family: "Plus Jakarta Sans";
+        src: url("./assets/fonts/PlusJakartaSans-VariableFont_wght.ttf")
+          format("truetype");
+        font-weight: 500 800;
+        font-display: swap;
+      }
+      @theme {
+        --font-display: "Plus Jakarta Sans", sans-serif;
+        --color-red-500: hsl(1, 90%, 64%);
+        --color-blue-950: hsl(219, 85%, 26%);
+        --color-navy-50: hsl(210, 60%, 98%);
+        --color-blue-100: hsl(211, 68%, 94%);
+        --color-navy-100: hsl(205, 33%, 90%);
+        --color-gray-500: hsl(219, 14%, 63%);
+        --color-gray-600: hsl(219, 12%, 42%);
+        --color-navy-950: hsl(224, 21%, 14%);
+        --color-attribution: hsl(228, 45%, 44%);
+        --text-base: 0.875rem; /* 14px */
+        --breakpoint-mobile: 23.438rem; /* 375px */
+        --breakpoint-desktop: 90rem; /* 1440px */
+      }
+    </style>
+  </head>
+  <body
+    class="font-display text-[14px] text-gray-600 bg-navy-50 h-dvh flex flex-col items-center pb-3 desktop:mt-10"
+  >
+    <main
+      class="main px-4 pb-4 mobile:max-w-[23.438rem] desktop:max-w-[45.625rem] rounded-xl shadow-lg bg-white"
+    >
+      <section class="header_section flex justify-between items-center py-4">
+        <div>
+          <span class="text-lg font-extrabold pr-1 text-navy-950"
+            >Notifications</span
+          >
+          <span
+            class="notifions_count inline-flex px-3 py-[2px] items-center justify-center rounded-md bg-blue-950 text-white font-bold"
+          ></span>
+        </div>
+        <button
+          class="notifications_read_all cursor-pointer hover:text-blue-950 focus:text-blue-950 focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-2 focus:rounded"
+        >
+          Mark all as read
+        </button>
+      </section>
+      <section class="main_section flex flex-col gap-2"></section>
+    </main>
+    <div class="text-center text-[11px] pt-4">
+      Challenge by
+      <a
+        href="https://www.frontendmentor.io?ref=challenge"
+        target="_blank"
+        class="text-attribution"
+        >Frontend Mentor</a
+      >. Coded by
+      <a href="https://github.com/hana1203" class="text-attribution">hana1203</a
+      >.
+    </div>
+  </body>
+  <script type="module" src="./dist/app.js"></script>
+</html>
