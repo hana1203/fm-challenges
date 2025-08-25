@@ -1,0 +1,161 @@
+ name: Build and Deploy All Subprojects to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install global tooling
+        run: |
+          npm install -g typescript
+
+      - name: Build all subprojects into _site
+        run: |
+          set -e
+          ROOT_DIR=$(pwd)
+          SITE_DIR="${ROOT_DIR}/_site"
+          mkdir -p "$SITE_DIR"
+
+          # find subdirectories at depth 1 only
+          for dir in $(find . -maxdepth 1 -type d ! -name "." ! -name ".git" ! -name "_site" ! -name ".github"); do
+            proj=$(basename "$dir")
+            echo "\n=== Processing $proj ==="
+
+            # Skip if directory doesn't contain any web content entry point
+            if [ ! -f "$dir/index.html" ] && [ ! -f "$dir/package.json" ] && [ ! -f "$dir/tsconfig.json" ]; then
+              echo "No recognizable project files in $proj, skipping."
+              continue
+            fi
+
+            OUT_DIR="$SITE_DIR/$proj"
+            mkdir -p "$OUT_DIR"
+
+            # Case 1: Node/React/etc with package.json and build script
+            if [ -f "$dir/package.json" ] && grep -q '"build"' "$dir/package.json"; then
+              echo "Node project detected in $proj. Installing deps and running build..."
+              pushd "$dir" >/dev/null
+              npm ci || npm install
+              npm run build
+              # Try common output dirs
+              if [ -d "dist" ]; then
+                cp -R dist/* "$OUT_DIR/"
+              elif [ -d "build" ]; then
+                cp -R build/* "$OUT_DIR/"
+              elif [ -d "out" ]; then
+                cp -R out/* "$OUT_DIR/"
+              else
+                echo "No standard build output folder found for $proj. Copying public/index.html if exists."
+                [ -d public ] && cp -R public/* "$OUT_DIR/" || true
+              fi
+              popd >/dev/null
+
+            # Case 2: TypeScript only, no bundler (tsconfig.json exists)
+            elif [ -f "$dir/tsconfig.json" ]; then
+              echo "TypeScript project detected in $proj. Compiling with tsc..."
+              pushd "$dir" >/dev/null
+              tsc --project tsconfig.json
+              # Copy index.html into dist if exists
+              if [ -f "index.html" ]; then
+                mkdir -p dist
+                cp index.html dist/index.html
+              fi
+              # Copy assets if exists
+              [ -d assets ] && mkdir -p dist && cp -R assets dist/assets || true
+              # Place built artifacts under OUT_DIR
+              if [ -d "dist" ]; then
+                cp -R dist/* "$OUT_DIR/"
+              else
+                echo "Expected dist folder not found for $proj"
+              fi
+              popd >/dev/null
+
+            # Case 3: Static HTML/CSS only
+            elif [ -f "$dir/index.html" ]; then
+              echo "Static site detected in $proj. Copying files..."
+              rsync -a --exclude "node_modules" --exclude ".*" "$dir/" "$OUT_DIR/"
+
+            else
+              echo "Unrecognized project type for $proj, skipping."
+            fi
+
+            # Add project link to the root index builder cache
+            echo "$proj" >> "$SITE_DIR/.projects"
+          done
+
+          # Generate root index.html with links to projects
+          echo "Generating root index.html..."
+          cat > "$SITE_DIR/index.html" << 'EOF'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>fm-challenges</title>
+            <style>
+              body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; padding: 24px; }
+              h1 { margin-bottom: 12px; }
+              ul { line-height: 1.9; }
+              a { color: #0366d6; text-decoration: none; }
+              a:hover { text-decoration: underline; }
+              .mono { color: #666; font-size: 12px; }
+            </style>
+          </head>
+          <body>
+            <h1>fm-challenges</h1>
+            <p class="mono">Auto-generated on deploy</p>
+            <ul id="projects"></ul>
+            <script>
+              fetch('./.projects').then(r => r.text()).then(t => {
+                const list = t.split('\n').filter(Boolean).sort();
+                const ul = document.getElementById('projects');
+                for (const name of list) {
+                  const li = document.createElement('li');
+                  const a = document.createElement('a');
+                  a.href = name + '/';
+                  a.textContent = name;
+                  li.appendChild(a);
+                  ul.appendChild(li);
+                }
+              }).catch(() => {
+                document.getElementById('projects').innerHTML = '<li>No projects found</li>';
+              });
+            </script>
+          </body>
+          </html>
+          EOF
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
