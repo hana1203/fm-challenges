@@ -1,8 +1,9 @@
- name: Build and Deploy All Subprojects to GitHub Pages
+name: Build and Deploy All Subprojects to GitHub Pages
 
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -35,6 +36,10 @@ jobs:
           ROOT_DIR=$(pwd)
           SITE_DIR="${ROOT_DIR}/_site"
           mkdir -p "$SITE_DIR"
+
+          # Copy existing root files
+          cp index.html "$SITE_DIR/"
+          cp style.css "$SITE_DIR/" 2>/dev/null || true
 
           # find subdirectories at depth 1 only
           for dir in $(find . -maxdepth 1 -type d ! -name "." ! -name ".git" ! -name "_site" ! -name ".github"); do
@@ -97,52 +102,7 @@ jobs:
             else
               echo "Unrecognized project type for $proj, skipping."
             fi
-
-            # Add project link to the root index builder cache
-            echo "$proj" >> "$SITE_DIR/.projects"
           done
-
-          # Generate root index.html with links to projects
-          echo "Generating root index.html..."
-          cat > "$SITE_DIR/index.html" << 'EOF'
-          <!doctype html>
-          <html lang="en">
-          <head>
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <title>fm-challenges</title>
-            <style>
-              body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; padding: 24px; }
-              h1 { margin-bottom: 12px; }
-              ul { line-height: 1.9; }
-              a { color: #0366d6; text-decoration: none; }
-              a:hover { text-decoration: underline; }
-              .mono { color: #666; font-size: 12px; }
-            </style>
-          </head>
-          <body>
-            <h1>fm-challenges</h1>
-            <p class="mono">Auto-generated on deploy</p>
-            <ul id="projects"></ul>
-            <script>
-              fetch('./.projects').then(r => r.text()).then(t => {
-                const list = t.split('\n').filter(Boolean).sort();
-                const ul = document.getElementById('projects');
-                for (const name of list) {
-                  const li = document.createElement('li');
-                  const a = document.createElement('a');
-                  a.href = name + '/';
-                  a.textContent = name;
-                  li.appendChild(a);
-                  ul.appendChild(li);
-                }
-              }).catch(() => {
-                document.getElementById('projects').innerHTML = '<li>No projects found</li>';
-              });
-            </script>
-          </body>
-          </html>
-          EOF
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
