@@ -25,7 +25,7 @@ function App() {
     role='button'
     >
         <div class='max-w-10 max-h-10 shrink-0'>
-           <img src=${avatarSrc} />
+           <img src=${avatarSrc} alt='${name} avatar' />
         </div>
         <div class='flex flex-col'>
           <div>
@@ -56,7 +56,7 @@ function App() {
         </div>
         ${
           target?.type === "PICTURE"
-            ? `<div class='ml-auto'><img src= ${target.pictureSrc} class='max-w-10 max-h-10 cursor-pointer hover:border-2 border-blue-100 focus:border-2 focus:border-blue-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1' tabindex="0" /></div>`
+            ? `<div class='ml-auto'><img src= ${target.pictureSrc} alt='${name} attached picture' class='max-w-10 max-h-10 cursor-pointer hover:border-2 border-blue-100 focus:border-2 focus:border-blue-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-950 focus:ring-offset-1' tabindex="0" /></div>`
             : ``
         }
         
