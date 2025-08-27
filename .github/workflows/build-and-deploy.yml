@@ -105,6 +105,19 @@ jobs:
             fi
           done
 
+      - name: Generate projects root data
+        run: |
+          npx tsx scripts/generate-projects.ts
+          mkdir -p _site
+          cp data.json _site/data.json
+
+      - name: Build root app.ts
+        run: |
+          npx tsc --project tsconfig.json
+          cp dist/app.js _site/app.js
+          sed 's|src="./dist/app.js"|src="./app.js"|g' index.html > _site/index.html
+          [ -f style.css ] && cp style.css _site/style.css || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
