@@ -41,17 +41,32 @@ h6 {
   text-wrap: balance;
 }
 
-#content {
+.content {
   height: 100dvh;
   padding: 2rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+}
+@media screen and (max-width: 375px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (min-width: 768px) {
+  .content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .content {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-#card {
+.card {
   max-width: 22rem;
   height: fit-content;
-  :hover {
+  &:hover {
     img {
       scale: 105%;
     }
@@ -59,7 +74,28 @@ h6 {
   img {
     border-radius: 1rem;
   }
-  div {
-    padding: 0.5rem;
-  }
+}
+
+.card-detail-wrapper {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chip-wrapper {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.chip {
+  font-size: small;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 0.25rem 0.5rem;
+  color: #374151;
+}
+
+.updated-date {
+  color: #374151;
 }
