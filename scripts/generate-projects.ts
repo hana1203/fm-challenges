@@ -108,7 +108,7 @@ interface CollectedProject {
   imgSrc: string;
   tags: string[];
   updatedAt: string;
-  _createdAtMs: number;
+  createdAt: string;
 }
 
 function collectProjects() {
@@ -147,18 +147,16 @@ function collectProjects() {
       projectSrc: `${entry}/index.html`,
       imgSrc,
       tags,
-      updatedAt: latest ?? "",
-      _createdAtMs: Number(first),
+      updatedAt: latest,
+      createdAt: first,
     });
   }
 
   // Sort by directory creation time (newest first)
-  projects.sort((a, b) => b._createdAtMs - a._createdAtMs);
-  // Remove helper field before returning
-  return projects.map(({ _createdAtMs, ...rest }) => rest);
+  return projects.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
-function writeJson(projects: Omit<CollectedProject, "_createdAtMs">[]) {
+function writeJson(projects: CollectedProject[]) {
   const outPath = path.join(ROOT, "data.json");
   writeFileSync(outPath, JSON.stringify({ projects }, null, 2) + "\n", "utf8");
   console.log(
