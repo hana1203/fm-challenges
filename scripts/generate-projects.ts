@@ -5,20 +5,11 @@ import {
   readFileSync,
   readdirSync,
   writeFileSync,
-  Stats,
 } from "node:fs";
 import path from "node:path";
+import { execSync } from "node:child_process";
 
 const ROOT = path.resolve(__dirname, "..");
-
-const SKIP_DIRS = new Set([
-  ".git",
-  ".github",
-  ".vscode",
-  "node_modules",
-  "dist",
-  "scripts",
-]);
 
 function isDirectory(absolutePath: string) {
   try {
@@ -48,17 +39,57 @@ function readMetaTags() {
   return {};
 }
 
-function safeBirthtimeMs(stats: Stats) {
-  // Prefer birthtimeMs; fall back to mtimeMs if not present/reliable
-  const birth = Number(stats.birthtimeMs);
-  if (Number.isFinite(birth) && birth > 0) return birth;
-  const mtime = Number(stats.mtimeMs);
-  return Number.isFinite(mtime) ? mtime : 0;
+function isGitAvailable(): boolean {
+  try {
+    execSync("git --version", { encoding: "utf8" }).trim();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
-function getLastUpdatedTime(stats: Stats) {
-  const mtime = Number(stats.mtimeMs);
-  return Number.isFinite(mtime) ? mtime : 0;
+function isInsideGitRepo(): boolean {
+  try {
+    execSync("git rev-parse --is-inside-work-tree", {
+      encoding: "utf8",
+    }).trim();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function gitOutputOrNull(cmd: string): string | null {
+  try {
+    return execSync(cmd, { encoding: "utf8" }).trim();
+  } catch {
+    return null;
+  }
+}
+
+function fsFallback(absDir: string) {
+  const stats = statSync(absDir);
+  const mtime = new Date(stats.mtimeMs).toISOString();
+  return { first: mtime, latest: mtime };
+}
+
+function getGitTimesOrFsFallback(dir: string) {
+  if (!isGitAvailable() || !isInsideGitRepo()) return fsFallback(dir);
+
+  //latest commit time for this directory
+  const latest = gitOutputOrNull(`git log -1 --format=%cI -- ${dir}`);
+  //first commit time for this directory
+  const firstHash = gitOutputOrNull(
+    `git rev-list --max-count=1 --reverse HEAD -- ${dir}`
+  );
+  const first = firstHash
+    ? gitOutputOrNull(`git show -s --format=%cI ${firstHash}`)
+    : null;
+
+  if (!latest || !first) {
+    return fsFallback(path.join(ROOT, dir));
+  }
+  return { first, latest };
 }
 
 function toTitleCase(slug: string) {
@@ -76,7 +107,7 @@ interface CollectedProject {
   projectSrc: string;
   imgSrc: string;
   tags: string[];
-  updatedAt: Date;
+  updatedAt: string;
   _createdAtMs: number;
 }
 
@@ -86,16 +117,14 @@ function collectProjects() {
   const metaTagsJson = readMetaTags();
 
   for (const entry of entries) {
-    if (SKIP_DIRS.has(entry)) continue;
+    if (!entry.endsWith("-main")) continue;
     const abs = path.join(ROOT, entry);
     if (!isDirectory(abs)) continue;
 
     const indexHtml = path.join(abs, "index.html");
     if (!exists(indexHtml)) continue; // consider it a project only if it has an index.html
 
-    const stats = statSync(abs);
-    const createdAtMs = safeBirthtimeMs(stats);
-    const updatedAtMs = getLastUpdatedTime(stats);
+    const { latest, first } = getGitTimesOrFsFallback(entry);
 
     const previewJpg = path.join(abs, "preview.jpg");
     const previewPng = path.join(abs, "preview.png");
@@ -112,16 +141,14 @@ function collectProjects() {
         ? metaTagsJson[entry]
         : ["HTML"];
 
-    const updatedDate = new Date(updatedAtMs);
-
     projects.push({
       dir: entry,
       name: toTitleCase(entry),
       projectSrc: `${entry}/index.html`,
       imgSrc,
       tags,
-      updatedAt: updatedDate,
-      _createdAtMs: createdAtMs,
+      updatedAt: latest ?? "",
+      _createdAtMs: Number(first),
     });
   }
 

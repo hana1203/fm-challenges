@@ -47,7 +47,7 @@ function renderProjects(projects: Project[]) {
   const projectsElements = projects
     .map((project) => cardTemplate(project))
     .join(" ");
-  console.log(projectsElements, "dd");
+
   document
     .querySelector(".content")
     ?.insertAdjacentHTML("beforeend", projectsElements);
