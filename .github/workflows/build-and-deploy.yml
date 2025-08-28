@@ -85,6 +85,10 @@ jobs:
                 # Fix script path from ./dist/app.js to ./app.js
                 sed 's|src="./dist/app.js"|src="./app.js"|g' index.html > dist/index.html
               fi
+              # Copy preview image file into dist
+              [ -f "preview.jpg" ] && mkdir -p dist && cp preview.jpg dist/ || true
+              [ -f "preview.png" ] && mkdir -p dist && cp preview.png dist/ || true
+              [ -f "preview.webp" ] && mkdir -p dist && cp preview.webp dist/ || true
               # Copy assets if exists
               [ -d assets ] && mkdir -p dist && cp -R assets dist/assets || true
               # Place built artifacts under OUT_DIR
