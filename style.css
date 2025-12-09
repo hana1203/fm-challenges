@@ -6,9 +6,13 @@
 * {
   margin: 0;
 }
+:root {
+  font-family: "DM Sans";
+}
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background: #f5f7fb;
 }
 img,
 svg {
@@ -42,7 +46,7 @@ h6 {
 }
 
 .content {
-  height: 100dvh;
+  height: 100%;
   padding: 2rem;
   display: grid;
   gap: 2rem;
@@ -66,20 +70,25 @@ h6 {
 .card {
   max-width: 22rem;
   height: fit-content;
+  border-radius: 1rem;
+  padding-bottom: 1.2rem;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06), 0 20px 40px rgba(0, 0, 0, 0.12);
   img {
-    border-radius: 1rem;
+    border-radius: 1rem 1rem 0 0;
   }
 }
 
 .card-detail-wrapper {
-  padding: 0.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.3rem;
 }
 
 .chip-wrapper {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
 }
 
@@ -93,4 +102,6 @@ h6 {
 
 .updated-date {
   color: #374151;
+  font-size: 14px;
+  padding-top: 0.3rem;
 }

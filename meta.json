@@ -1,6 +1,6 @@
 {
   "tags": {
-    "notifications-page-main": ["HTML", "TailwindCSS", "TypeScript"],
+    "notifications-page-main": ["HTML", "TypeScript", "TailwindCSS"],
     "bento-grid-main": ["HTML", "TailwindCSS"]
   },
   "externalProjects": [

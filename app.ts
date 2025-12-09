@@ -17,9 +17,11 @@ interface Project {
 
 function formatDate(date: string) {
   const dateObj = new Date(date);
-  return `${dateObj.getFullYear()}.${
-    dateObj.getMonth() + 1
-  }.${dateObj.getDate()}`;
+  return dateObj.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 function renderProjects(projects: Project[]) {
