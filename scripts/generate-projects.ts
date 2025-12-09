@@ -7,7 +7,6 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import { execSync } from "node:child_process";
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -39,57 +38,21 @@ function readMetaTags() {
   return {};
 }
 
-function isGitAvailable(): boolean {
-  try {
-    execSync("git --version", { encoding: "utf8" }).trim();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function isInsideGitRepo(): boolean {
-  try {
-    execSync("git rev-parse --is-inside-work-tree", {
-      encoding: "utf8",
-    }).trim();
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function gitOutputOrNull(cmd: string): string | null {
-  try {
-    return execSync(cmd, { encoding: "utf8" }).trim();
-  } catch {
-    return null;
-  }
-}
-
-function fsFallback(absDir: string) {
+function fsDates(absDir: string) {
   const stats = statSync(absDir);
-  const mtime = new Date(stats.mtimeMs).toISOString();
-  return { first: mtime, latest: mtime };
+  const createdMs = Number.isFinite(stats.birthtimeMs)
+    ? stats.birthtimeMs
+    : stats.ctimeMs;
+  return {
+    first: new Date(createdMs).toISOString(),
+    latest: new Date(stats.mtimeMs).toISOString(),
+  };
 }
 
-function getGitTimesOrFsFallback(dir: string) {
-  if (!isGitAvailable() || !isInsideGitRepo()) return fsFallback(dir);
-
-  //latest commit time for this directory
-  const latest = gitOutputOrNull(`git log -1 --format=%cI -- ${dir}`);
-  //first commit time for this directory
-  const firstHash = gitOutputOrNull(
-    `git rev-list --max-count=1 --reverse HEAD -- ${dir}`
-  );
-  const first = firstHash
-    ? gitOutputOrNull(`git show -s --format=%cI ${firstHash}`)
-    : null;
-
-  if (!latest || !first) {
-    return fsFallback(path.join(ROOT, dir));
-  }
-  return { first, latest };
+// Use local file timestamps (creation + last modified)
+function getLocalTimes(dir: string) {
+  const absDir = path.join(ROOT, dir);
+  return fsDates(absDir);
 }
 
 function toTitleCase(slug: string) {
@@ -124,7 +87,7 @@ function collectProjects() {
     const indexHtml = path.join(abs, "index.html");
     if (!exists(indexHtml)) continue; // consider it a project only if it has an index.html
 
-    const { latest, first } = getGitTimesOrFsFallback(entry);
+    const { latest, first } = getLocalTimes(entry);
 
     const previewJpg = path.join(abs, "preview.jpg");
     const previewPng = path.join(abs, "preview.png");
