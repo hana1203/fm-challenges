@@ -30,11 +30,16 @@ function exists(absolutePath: string) {
 type MetaFile = {
   tags?: Record<string, unknown>;
   externalProjects?: Partial<CollectedProject>[];
+  dates?: Record<
+    string,
+    Partial<Pick<CollectedProject, "createdAt" | "updatedAt">>
+  >;
 };
 
 type ParsedMeta = {
   tags: Record<string, string[]>;
   externalProjects: CollectedProject[];
+  dates: Record<string, { createdAt?: string; updatedAt?: string }>;
 };
 
 function isStringArray(value: unknown): value is string[] {
@@ -99,7 +104,7 @@ function parseExternalProjects(
 
 function readMeta(): ParsedMeta {
   const metaPath = path.join(ROOT, "meta.json");
-  const defaultMeta: ParsedMeta = { tags: {}, externalProjects: [] };
+  const defaultMeta: ParsedMeta = { tags: {}, externalProjects: [], dates: {} };
   if (!exists(metaPath)) return defaultMeta;
 
   try {
@@ -109,6 +114,13 @@ function readMeta(): ParsedMeta {
     return {
       tags: parseTags(json),
       externalProjects: parseExternalProjects(json, nowIso),
+      dates:
+        json &&
+        typeof json === "object" &&
+        json.dates &&
+        typeof json.dates === "object"
+          ? (json.dates as ParsedMeta["dates"])
+          : {},
     };
   } catch {
     return defaultMeta;
@@ -151,7 +163,10 @@ interface CollectedProject {
   createdAt: string;
 }
 
-function collectProjects(tagsByDir: Record<string, string[]>) {
+function collectProjects(
+  tagsByDir: Record<string, string[]>,
+  datesByDir: ParsedMeta["dates"]
+) {
   const entries = readdirSync(ROOT);
   const projects: CollectedProject[] = [];
 
@@ -163,7 +178,10 @@ function collectProjects(tagsByDir: Record<string, string[]>) {
     const indexHtml = path.join(abs, "index.html");
     if (!exists(indexHtml)) continue; // consider it a project only if it has an index.html
 
+    const overrideDates = datesByDir[entry] || {};
     const { latest, first } = getLocalTimes(entry);
+    const createdAt = coerceDates(overrideDates.createdAt, first);
+    const updatedAt = coerceDates(overrideDates.updatedAt, latest);
 
     const previewJpg = path.join(abs, "preview.jpg");
     const previewPng = path.join(abs, "preview.png");
@@ -182,8 +200,8 @@ function collectProjects(tagsByDir: Record<string, string[]>) {
       projectSrc: `${entry}/index.html`,
       imgSrc,
       tags,
-      updatedAt: latest,
-      createdAt: first,
+      updatedAt,
+      createdAt,
     });
   }
 
@@ -213,7 +231,7 @@ function writeJson(projects: CollectedProject[]) {
 
 (function main() {
   const meta = readMeta();
-  const internal = collectProjects(meta.tags);
+  const internal = collectProjects(meta.tags, meta.dates);
   const projects = mergeProjects(internal, meta.externalProjects);
   writeJson(projects);
 })();
