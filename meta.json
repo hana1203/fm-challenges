@@ -1,4 +1,16 @@
 {
-  "notifications-page-main": ["HTML", "Tailwind CSS", "TypeScript"],
-  "bento-grid-main": ["HTML", "Tailwind CSS"]
+  "tags": {
+    "notifications-page-main": ["HTML", "TailwindCSS", "TypeScript"],
+    "bento-grid-main": ["HTML", "TailwindCSS"]
+  },
+  "externalProjects": [
+    {
+      "name": "Interactive Comments Section",
+      "projectSrc": "https://interactive-comments-steel.vercel.app/",
+      "imgSrc": "https://res.cloudinary.com/dz209s6jk/image/upload/v1639765916/Challenges/l3cxamx1e6vpngqjtdyt.jpg",
+      "tags": ["Next.js", "Prisma", "PostgreSQL", "RadixUI", "TailwindCSS"],
+      "updatedAt": "2025-11-18T18:29:35+09:00",
+      "createdAt": "2025-09-03T18:29:35+09:00"
+    }
+  ]
 }
